@@ -9,16 +9,14 @@ class HakoAplSample(HakoAplOps):
     def initialize(self, pdu: HakoAssetPdu):
         self.pdu = pdu
         self.read_channel = 1
-        self.write_channel = 0
+        self.write_channel = 2
 
     def step(self):
         #GET PDU
         read_data = self.pdu.get_read_pdu_json(self.read_channel)
-        #print("read_data: ", read_data['data'])
+        print("read_data: ", read_data['linear']['z'])
 
         cmd_vel = self.pdu.get_write_pdu_json(self.write_channel)        
-        cmd_vel['linear']['x'] = 1.0
-        cmd_vel['linear']['y'] = 5.0
         #print(str(cmd_vel))
         #WRITE PDU
         self.pdu.update_write_buffer(self.write_channel, cmd_vel)

@@ -32,9 +32,6 @@ class HakoRunner:
         with open(filepath, 'r') as file:
             self.config = json.load(file)
 
-        with open(self.config['robot_config_path'], 'r') as file:
-            self.robo_config = json.load(file)
-
         if self.config.get('apl_config_path') != None:
             with open(self.config['apl_config_path'], 'r') as file:
                 self.apl_config = json.load(file)
@@ -44,6 +41,8 @@ class HakoRunner:
 
 
     def initialize(self, apl):
+        self.controller.initialize()
+
         # ROBOTS FOR APPLICATIONS
         self.apls = []
         if self.apl_config != None:
@@ -105,10 +104,3 @@ class HakoRunner:
  
     def _reset(self):
         pass
-
-
-
-
-
-
-

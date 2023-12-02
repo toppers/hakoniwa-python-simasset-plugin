@@ -29,7 +29,7 @@ fi
 #install libshakoc.dylib
 OS_TYPE=`uname`
 ARCH=`arch`
-VERSION="1.0.4"
+VERSION="v1.0.4"
 
 if [ "$OS_TYPE" = "Darwin" ]
 then

@@ -1,0 +1,1 @@
+# hakoniwa-python-simasset-plugin

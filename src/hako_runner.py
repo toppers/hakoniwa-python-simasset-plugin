@@ -94,7 +94,6 @@ class HakoRunner:
                         if self.controller.is_pdu_sync_mode():
                             #FOR APPLS
                             self.apl_sync_write_pdus()
-                        time.sleep(0.01)
                         continue
 
                 #FOR APLS

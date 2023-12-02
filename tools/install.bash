@@ -1,8 +1,11 @@
 #!/bin/bash
 
-if [ $# -ne 1 ]
+#install Python3
+#brew install python3
+which python3
+if [ $? -ne 0 ]
 then
-    echo "Usage: $0 { intel | arm }"
+    echo "ERROR: not installed python3, please install python3 ver3.10 using pyenv"
     exit 1
 fi
 
@@ -24,37 +27,23 @@ sudo    mkdir ${HAKO_BINDIR}
 fi
 
 #install libshakoc.dylib
-if [ $1 = arm ]
+OS_TYPE=`uname`
+ARCH=`arch`
+VERSION="1.0.4"
+
+if [ "$OS_TYPE" = "Darwin" ]
 then
-    LIBNAME=libshakoc.arm64.dylib
-    wget https://github.com/toppers/hakoniwa-core-cpp-client/releases/download/v1.0.3/${LIBNAME}
+    EXT="dylib"
 else
-    LIBNAME=libshakoc.dylib
-    wget https://github.com/toppers/hakoniwa-core-cpp-client/releases/download/v1.0.0/${LIBNAME}
+    EXT="so"
 fi
+
+LIBNAME=libshakoc.${ARCH}.${EXT}
+CMDNAME=hako-cmd.${ARCH}.${OS_TYPE}
+wget https://github.com/toppers/hakoniwa-core-cpp-client/releases/download/${VERSION}/${LIBNAME}
+wget https://github.com/toppers/hakoniwa-core-cpp-client/releases/download/${VERSION}/${CMDNAME}
+
 sudo cp ${LIBNAME} ${HAKO_LIBDIR}/hakoc.so
-sudo mv ${LIBNAME} ${HAKO_LIBDIR}/libshakoc.dylib
-
-
-#install Python3
-#brew install python3
-which python3
-if [ $? -ne 0 ]
-then
-    echo "ERROR: not installed python3, please install python3 using pyenv"
-    exit 1
-fi
-pip3 install numpy
-pip3 install pybullet
-
-#install hakoniwa-conductor
-if [ $1 = arm ]
-then
-    HAKO_CONDUCTOR=hakoniwa-conductor-mac-arm64
-    wget https://github.com/toppers/hakoniwa-conductor/releases/download/v1.0.3/${HAKO_CONDUCTOR}
-else
-    HAKO_CONDUCTOR=hakoniwa-conductor-mac
-    wget https://github.com/toppers/hakoniwa-conductor/releases/download/v1.0.0/${HAKO_CONDUCTOR}
-fi
-chmod +x ${HAKO_CONDUCTOR} 
-sudo mv ${HAKO_CONDUCTOR} /usr/local/bin/hakoniwa/hakoniwa-conductor
+sudo mv ${LIBNAME} ${HAKO_LIBDIR}/libshakoc.${EXT}
+sudo mv ${CMDNAME} ${HAKO_BINDIR}/hako-cmd
+sudo chmod +x ${HAKO_BINDIR}/hako-cmd

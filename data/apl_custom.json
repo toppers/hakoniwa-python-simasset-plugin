@@ -1,0 +1,26 @@
+{
+  "robots": [
+    {
+      "name": "SampleRobo",
+      "shm_pdu_writers": [
+        {
+          "type": "geometry_msgs/Twist",
+          "org_name": "cmd_vel",
+          "name": "SampleRobo_cmd_vel",
+          "channel_id": 0,
+          "pdu_size": 48
+        }
+      ],
+      "shm_pdu_readers": [
+        {
+          "type": "std_msgs/String",
+          "org_name": "sensor",
+          "name": "SampleRobo_sensor",
+          "channel_id": 1,
+          "pdu_size": 256,
+          "method_type": "SHM"
+        }
+      ]
+    }
+  ]
+}
